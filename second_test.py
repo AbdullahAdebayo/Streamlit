@@ -1,13 +1,26 @@
-import streamlit as st
-import yfinance as yf
+import yfinance as yf 
+import streamlit as st 
 import pandas as pd
 
-st.title("Stock Price Viewer")
+st.write( """
+         
+          # Simple Stock Price App \n Here is the Opening,Closing Price nad Volume of Microsoft,Tesla and Apple in the past 6 months! 
+         
+         
+         """)
+    
 
-tickerSymbol = "MSFT"
+tickerSymbols = ["MSFT" , "TSLA" , "AAPL"] 
 
-tickerData = yf.Ticker(tickerSymbol)
+interval = "1w"
 
-tickerDf = tickerData.history(period = "5y" , interval = '1mo' , start = '1990-02-01' , end = '1995-02-01')
+tickerData = yf.download(tickerSymbols , period= "6mo")
 
-st.line_chart(tickerDf.Close)
+
+print(tickerData.Open)
+print(tickerData.Close)
+print(tickerData.Volume)
+
+st.line_chart(tickerData.Open)
+st.line_chart(tickerData.Close)
+st.line_chart(tickerData.Volume)
